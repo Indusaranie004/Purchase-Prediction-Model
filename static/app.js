@@ -412,14 +412,22 @@ function updatePieChart(buyers, nonBuyers) {
             labels: ['Buyers', 'Non-Buyers'],
             datasets: [{
                 data: [buyers, nonBuyers],
-                backgroundColor: ['#4ade80', '#ec4899'],
-                borderColor: ['#22c55e', '#d946ef'],
+                backgroundColor: ['#4ade80', '#047857'],
+                borderColor: ['#22c55e', '#065f46'],
                 borderWidth: 2
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 30,
+                    right: 30,
+                    bottom: 30,
+                    left: 30
+                }
+            },
             plugins: {
                 legend: {
                     display: false
@@ -434,8 +442,8 @@ function updatePieChart(buyers, nonBuyers) {
                 },
                 datalabels: {
                     color: function(context) {
-                        // Use green for buyers, pink for non-buyers
-                        return context.dataIndex === 0 ? '#4ade80' : '#ec4899';
+                        // Use green for buyers, dark green for non-buyers
+                        return context.dataIndex === 0 ? '#4ade80' : '#047857';
                     },
                     font: {
                         size: 16,
@@ -449,17 +457,17 @@ function updatePieChart(buyers, nonBuyers) {
                     },
                     anchor: 'end',
                     align: 'end',
-                    offset: 25,
+                    offset: 15,
                     clip: false,
                     textStrokeColor: '#121212',
                     textStrokeWidth: 4,
                     textShadowBlur: 8,
                     textShadowColor: '#121212',
                     backgroundColor: function(context) {
-                        return context.dataIndex === 0 ? 'rgba(74, 222, 128, 0.15)' : 'rgba(236, 72, 153, 0.15)';
+                        return context.dataIndex === 0 ? 'rgba(74, 222, 128, 0.15)' : 'rgba(4, 120, 87, 0.15)';
                     },
                     borderColor: function(context) {
-                        return context.dataIndex === 0 ? '#4ade80' : '#ec4899';
+                        return context.dataIndex === 0 ? '#4ade80' : '#047857';
                     },
                     borderRadius: 8,
                     borderWidth: 2,

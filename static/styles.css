@@ -12,12 +12,12 @@
     --text-primary: #ffffff;
     --accent-green: #4ade80;
     --accent-green-dark: #22c55e;
-    --accent-pink: #ec4899;
-    --accent-pink-dark: #d946ef;
+    --accent-secondary: #047857;
+    --accent-secondary-dark: #065f46;
     --accent-yellow: #fbbf24;
     --accent-yellow-dark: #f59e0b;
     --green-glow: rgba(74, 222, 128, 0.15);
-    --pink-glow: rgba(236, 72, 153, 0.15);
+    --secondary-glow: rgba(4, 120, 87, 0.15);
     --yellow-glow: rgba(251, 191, 36, 0.15);
 }
 
@@ -145,8 +145,8 @@ body {
     color: var(--accent-green);
 }
 
-.pink-text {
-    color: var(--accent-pink);
+.secondary-text {
+    color: var(--accent-secondary);
 }
 
 /* Cards */
@@ -312,7 +312,7 @@ body {
 }
 
 .prediction-badge.non-buyer {
-    background: linear-gradient(135deg, var(--accent-pink), var(--accent-pink-dark));
+    background: linear-gradient(135deg, var(--accent-secondary), var(--accent-secondary-dark));
     color: var(--text-primary);
 }
 
@@ -397,8 +397,10 @@ body {
 
 .chart-container {
     position: relative;
-    height: 320px;
+    height: 240px;
     margin-top: 20px;
+    padding: 10px;
+    overflow: visible;
 }
 
 .table-header {
@@ -516,7 +518,7 @@ body {
 }
 
 .table-confidence-bar-fill.non-buyer {
-    background: linear-gradient(90deg, var(--accent-pink), var(--accent-pink-dark));
+    background: linear-gradient(90deg, var(--accent-secondary), var(--accent-secondary-dark));
 }
 
 /* Responsive */
@@ -526,7 +528,7 @@ body {
     }
     
     .chart-container {
-        height: 320px;
+        height: 240px;
     }
 }
 
@@ -551,7 +553,7 @@ body {
     }
     
     .chart-container {
-        height: 280px;
+        height: 250px;
     }
 }
 
