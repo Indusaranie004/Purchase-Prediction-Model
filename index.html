@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Prediction Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="/static/BuyLyticsAI.gif" alt="Logo" class="logo">
+                <div class="logo-text">
+                    <div class="logo-title">BuyLyticsAI</div>
+                    <div class="logo-subtitle">Purchase Prediction Model</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="info-icon" id="infoIcon" title="Model Information">
+                    <span>ⓘ</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Model Info Tooltip -->
+        <div class="tooltip" id="modelTooltip">
+            <div class="tooltip-content">
+                <h3>Model Performance</h3>
+                <p>True Positive Rate: <span class="green-text">75.72%</span></p>
+                <p>True Negative Rate: <span class="green-text">90.65%</span></p>
+                <p>Overall Accuracy: <span class="green-text">88.34%</span></p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- File Upload Section -->
+            <div class="card upload-card">
+                <h2 class="card-title">Upload Data</h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p class="upload-text">Drag and drop CSV or JSON file here</p>
+                        <p class="upload-subtext">or</p>
+                        <button class="upload-button" id="uploadButton">Browse Files</button>
+                        <input type="file" id="fileInput" accept=".csv,.json" style="display: none;">
+                    </div>
+                </div>
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <span class="file-name" id="fileName"></span>
+                    <button class="remove-file" id="removeFile">×</button>
+                </div>
+                <div class="analyze-section" id="analyzeSection" style="display: none;">
+                    <button class="analyze-button" id="analyzeButton">Analyze</button>
+                </div>
+            </div>
+
+            <!-- Single Prediction Result -->
+            <div class="card result-card" id="singleResult" style="display: none;">
+                <h2 class="card-title">Prediction Result</h2>
+                <div class="prediction-display">
+                    <div class="prediction-badge" id="predictionBadge">
+                        <span id="predictionText"></span>
+                    </div>
+                    <div class="confidence-section">
+                        <div class="confidence-label">Confidence</div>
+                        <div class="confidence-value" id="confidenceValue"></div>
+                        <div class="confidence-bar-container">
+                            <div class="confidence-bar" id="confidenceBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Batch Results Section -->
+            <div class="batch-results" id="batchResults" style="display: none;">
+                <!-- Summary Statistics -->
+                <div class="card stats-card">
+                    <h2 class="card-title">Summary Statistics</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Total Predictions</div>
+                            <div class="stat-value" id="totalPredictions">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Buyers</div>
+                            <div class="stat-value green-text" id="buyerCount">0</div>
+                            <div class="stat-percentage" id="buyerPercentage">0%</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Non-Buyers</div>
+                            <div class="stat-value pink-text" id="nonBuyerCount">0</div>
+                            <div class="stat-percentage" id="nonBuyerPercentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="card chart-card">
+                    <h2 class="card-title">Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="card table-card">
+                    <div class="table-header">
+                        <h2 class="card-title">Top Predictions</h2>
+                        <div class="download-options">
+                            <button class="download-button" id="downloadExcel">
+                                <span>Download Excel</span>
+                            </button>
+                            <button class="download-button" id="downloadPDF">
+                                <span>Download PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-info" id="tableInfo"></div>
+                    <div class="table-wrapper">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Session ID</th>
+                                    <th>Prediction</th>
+                                    <th>Confidence</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
+
